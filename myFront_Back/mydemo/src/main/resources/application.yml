@@ -1,0 +1,27 @@
+server:
+  port: 8080  # 设置Spring Boot应用程序的服务器端口为8080
+#查看端口是否占用lsof -i :8080
+#杀被占用的进程    kill -9 89974
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydemo?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # `url` 是连接MySQL数据库的JDBC URL。这里的URL指定了数据库的连接信息：
+    # - `localhost:3306` 表示数据库服务器运行在本地（localhost）并监听3306端口，这是MySQL的默认端口。
+    # - `mydemo` 是数据库的名称，表示应用程序将连接到这个数据库。
+    # - `useUnicode=true` 确保数据库连接支持Unicode字符。
+    # - `characterEncoding=utf8` 指定字符编码为UTF-8，确保正确处理多语言字符。
+    # - `serverTimezone=UTC` 设置数据库服务器的时区为UTC，避免时区相关的问题。
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      # - `update` 表示如果表结构发生变化，Hibernate会自动更新数据库中的表结构而不会删除现有数据。
+      # - 其他选项还包括 `none`, `validate`, `create`, `create-drop` 等，具体选择依据需求而定。
+      show-sql: true  # 设置为 `true` 表示在控制台打印执行的SQL语句。方便调试时查看应用程序生成的SQL语句。
+
+      database-platform: org.hibernate.dialect.MySQL8Dialect  # 配置Hibernate使用的数据库方言，这里指定为MySQL 8.x版本的方言。
+      # - `org.hibernate.dialect.MySQL8Dialect` 告诉Hibernate如何生成适合MySQL 8.x版本的SQL语句。
