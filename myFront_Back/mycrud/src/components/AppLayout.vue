@@ -1,8 +1,7 @@
 <template>
-  <div id="app">
+  <div>
     <!-- 导航链接 -->
-    <nav>
-      
+    <nav v-if="showNav">
       <router-link to="/role">用户模块</router-link>
       <!-- 其他导航链接 -->
     </nav>
@@ -14,20 +13,17 @@
 
 <script>
 export default {
-  name: 'App',
+  name: 'AppLayout',
+  computed: {
+    showNav() {
+      // 判断当前路由是否需要显示导航栏
+      return this.$route.path !== '/role'; // 示例：如果当前路由是/role，则不显示导航栏
+    }
+  }
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
 nav {
   margin-bottom: 20px;
 }

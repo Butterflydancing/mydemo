@@ -1,26 +1,25 @@
-// /$$
-//  $ @Author: lyndonarcmond Junjie wang && wangjunjie00007@163.com 
-//  $ @Date: 2024-08-19 09:12:13
-//  $ @LastEditors: lyndonarcmond Junjie wang && wangjunjie00007@163.com
-//  $ @LastEditTime: 2024-08-19 09:17:20
-//  $ @FilePath: /htmlworks/vue/mycrud/src/router/index.js
-//  $ @Description: 
-//  $ @Copyright (c) 2024 by ${Junjie Wang}, All Rights Reserved. 
-//  $/
-import { createRouter, createWebHistory } from 'vue-router'
-// import IdentifierComponent from '../components/IdentifierCrud.vue'
-// import RoleComponent from '../components/RoleCrud.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import AppLayout from '../components/AppLayout.vue'; // 引入布局组件
+import UserModule from '../components/UserModule.vue'; // 用户模块组件
 
-import RoleCrud from '../components/RoleCrud.vue'
 
 const routes = [
-
-  { path: '/role', component: RoleCrud }
-]
+  {
+    path: '/',
+    component: AppLayout, // 默认布局
+    children: [
+      {
+        path: 'role',
+        component: UserModule, // 用户模块组件
+      },
+      // 其他子路由
+    ]
+  }
+];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
-})
+});
 
-export default router
+export default router;

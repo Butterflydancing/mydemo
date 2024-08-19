@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +13,8 @@ public class Role {
 
     @Column(nullable = false, unique = true)
     private String roleName;
+
+
 
     private String description;
 
@@ -60,4 +62,6 @@ public class Role {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+
 }

@@ -15,6 +15,9 @@ spring:
     # - `useUnicode=true` 确保数据库连接支持Unicode字符。
     # - `characterEncoding=utf8` 指定字符编码为UTF-8，确保正确处理多语言字符。
     # - `serverTimezone=UTC` 设置数据库服务器的时区为UTC，避免时区相关的问题。
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
 
   jpa:
     hibernate:
