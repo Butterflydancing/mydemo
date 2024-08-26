@@ -1,20 +1,16 @@
 <template>
   <div id="app">
-    <!-- 导航链接 -->
-    <nav>
-      
-      <router-link to="/role">用户模块</router-link>
-      <!-- 其他导航链接 -->
-    </nav>
-
-    <!-- 动态加载组件 -->
-    <router-view />
+    <UserModule />
   </div>
 </template>
 
 <script>
+import UserModule from './components/UserModule.vue'; // 引入 UserModule 组件
 export default {
   name: 'App',
+  components: {
+    UserModule
+  }
 };
 </script>
 

@@ -14,7 +14,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String roleName;
 
-
+    // 新增头像路径字段
+    private String avatarPath;
 
     private String description;
 
@@ -51,6 +52,17 @@ public class User {
         return createdAt;
     }
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
@@ -63,5 +75,11 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
+    public String getAvatarPath() {
+        return avatarPath;
+    }
 
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
+    }
 }

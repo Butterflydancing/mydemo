@@ -48,10 +48,16 @@ public class UserService {
                 .map(existingUser -> {
                     existingUser.setRoleName(newUser.getRoleName());
                     existingUser.setDescription(newUser.getDescription());
+                    existingUser.setAvatarPath(newUser.getAvatarPath()); // 更新头像路径
+                    // 仅当 newUser.getAvatarPath() 不为空时才更新 avatarPath
+                    if (newUser.getAvatarPath() != null && !newUser.getAvatarPath().isEmpty()) {
+                        existingUser.setAvatarPath(newUser.getAvatarPath());
+                    }
                     return userRepository.save(existingUser);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Role with ID " + id + " not found"));
     }
+
 
     public void deleteRole(Long id) {
         userRepository.deleteById(id);
@@ -65,6 +71,8 @@ public class UserService {
     public Optional<User> getRoleById(Long id) {
         return userRepository.findById(id);
     }
+
+
 
 
 }

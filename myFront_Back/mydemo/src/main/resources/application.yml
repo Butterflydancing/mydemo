@@ -1,7 +1,7 @@
 server:
   port: 8080  # 设置Spring Boot应用程序的服务器端口为8080
-#查看端口是否占用lsof -i :8080
-#杀被占用的进程    kill -9 89974
+#查看端口是否占用netstat -ano | findstr :8080
+#杀被占用的进程    tasklist /FI "PID eq 13796"
 
 spring:
   datasource:
@@ -28,3 +28,5 @@ spring:
 
       database-platform: org.hibernate.dialect.MySQL8Dialect  # 配置Hibernate使用的数据库方言，这里指定为MySQL 8.x版本的方言。
       # - `org.hibernate.dialect.MySQL8Dialect` 告诉Hibernate如何生成适合MySQL 8.x版本的SQL语句。
+upload:
+  path: src/main/resources/static/images/

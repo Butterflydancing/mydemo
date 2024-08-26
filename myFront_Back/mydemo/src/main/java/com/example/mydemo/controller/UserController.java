@@ -6,17 +6,19 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
-@RequestMapping("/api/roles")
+@RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:8081") // 允许跨域请求
 @Api(tags = "用户管理")
 public class UserController {
@@ -60,6 +62,7 @@ public class UserController {
         return userService.saveRole(user);
     }
 
+
     @PutMapping("/{id}")
     @ApiOperation(value = "更新角色")
     public User updateRole(@PathVariable @ApiParam(value = "角色ID", required = true) Long id, @RequestBody @ApiParam(value = "更新后的角色信息", required = true) User user) {
@@ -77,6 +80,41 @@ public class UserController {
     public void deleteRoles(@RequestBody @ApiParam(value = "角色ID列表", required = true) List<Long> ids) {
         userService.deleteRoles(ids);
     }
+
+    @Value("${upload.path}")
+    private String uploadPath;
+
+
+    @ApiOperation(value = "上传头像")
+    @PostMapping("/upload-avatar")
+    public ResponseEntity<String> uploadAvatar(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("上传失败: 文件为空");
+        }
+
+        File folder = new File(uploadPath);
+        if (!folder.exists()) {
+            if (!folder.mkdirs()) {
+                return ResponseEntity.badRequest().body("上传失败: 文件夹创建失败");
+            }
+        }
+
+        // 生成唯一文件名
+        String originalFileName = file.getOriginalFilename();
+        String fileName = UUID.randomUUID().toString() + "_" + originalFileName;
+        File dest = new File(folder.getAbsolutePath() + File.separator + fileName);
+
+        try {
+            // 保存文件
+            file.transferTo(dest);
+            // 返回文件的相对路径
+            return ResponseEntity.ok("/images/" + fileName);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("上传失败: " + e.getMessage());
+        }
+    }
+
+
 
 
 }
